@@ -1,4 +1,4 @@
 # tapas
 tapas.ai frontend
 
-something something js something CSS something HTML I dunno
+Uses Bootstrap and `Fetch()` to grab data from the API.

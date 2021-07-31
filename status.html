@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>tapas</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="http://tapas.ai">tapas.ai</a>
+
+    <!-- Toggle button -->
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- Link -->
+        <li class="nav-item">
+          <li class="nav-item">
+            <a class="nav-link" href="upload.html">Upload</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="status.html">Job Status</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Documentation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">FAQ</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+
+      </ul>
+
+      <!-- Icons -->
+      <ul class="navbar-nav d-flex flex-row me-1">
+        <li class="nav-item me-3 me-lg-0">
+          <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+        </li>
+        <li class="nav-item me-3 me-lg-0">
+          <a class="nav-link" href="#"><i class="fab fa-twitter"></i></a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+<center>
+<div class="px-4 py-5 my-5 mx-10 w-50 text-center">
+	<div class="input-group mb-3">
+		<input type="text" id="jobid" class="form-control" placeholder="Job ID" aria-label="Job ID" aria-describedby="button-addon2">
+		<button class="btn btn-outline-secondary" type="button" id="btnGo">GO</button>
+	</div>
+	<div class="alert alert-primary" role="alert" id="statusMessage" hidden=true></div>
+	
+<table class="table" hidden=true id="resultsTable">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">File 1</th>
+      <th scope="col">Text 1</th>
+      <th scope="col">File 2</th>
+	  <th scope="col">Text 2</th>
+	  <th scope="col">Similarity</th>
+    </tr>
+  </thead>
+  <tbody>
+ 
+  </tbody>
+</table>
+</div>
+</center>
+<script>
+
+function getResults(jobid) {
+	fetch('http://tapas.murraystate.edu/api/results/' + jobid)
+		.then(function(response) { 
+			  return response.json();
+			}).then(function(data){
+				////
+		})
+	}
+
+const statusMessage = document.getElementById("statusMessage");
+const btnGo = document.getElementById("btnGo");
+const resultsTable = document.getElementById("resultsTable");
+
+btnGo.addEventListener("click", function () {
+
+jobid = document.getElementById('jobid').value;
+fetch('http://tapas.murraystate.edu/api/jobs/' + jobid)
+	.then(function(response) { 
+		  return response.json();
+		}).then(function(data){
+			if (data.status == "READY") {
+				statusMessage.innerHTML = "Your files are cued and waiting to be analyzed.";
+				statusMessage.hidden = false;
+			} else if (data.status == "CONVERTED") {
+				statusMessage.innerHTML = "Text has been extracted from the files you uploaded and is being analyzed.";
+				statusMessage.hidden = false;
+			} else if (data.status == "ANALYZED") {
+				statusMessage.innerHTML = "Analysis is complete! Preparing results.";
+				statusMessage.hidden = false;
+			} else if (data.status == "FINISHED") {
+				fetch('http://tapas.murraystate.edu/api/results/' + jobid)
+					.then(function(response) { 
+						  return response.json();
+						}).then(function(data){
+							for (var resultsdRow of data) {
+								// Create an empty <tr> element and add it to the 1st position of the table:
+								var row = resultsTable.insertRow(0);
+
+								// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+								var cell1 = row.insertCell(0);
+								var cell2 = row.insertCell(1);
+								var cell3 = row.insertCell(2);
+								var cell4 = row.insertCell(3);
+								var cell5 = row.insertCell(4);
+								var cell6 = row.insertCell(5);
+
+								// Add some text to the new cells:
+								cell1.innerHTML = resultsdRow.result_number;
+								cell2.innerHTML = resultsdRow.file1;
+								cell3.innerHTML = resultsdRow.text1;
+								cell4.innerHTML = resultsdRow.file2;
+								cell5.innerHTML = resultsdRow.text2;
+								cell6.innerHTML = resultsdRow.similarity;
+							}
+						})
+			}
+				statusMessage.hidden = true;
+				resultsTable.hidden = false;
+		})
+	})
+ </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

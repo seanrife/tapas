@@ -67,17 +67,25 @@
 <div class="position-relative">
 <div class="px-4 py-5 my-5 mx-10 w-50 text-center">
   <label for="formFileMultiple" class="form-label">PUT INSTRUCTIONS HERE</label>
-  <input class="form-control" type="file" id="formFileMultiple" multiple />
-  <button id="btnUpload">Upload</button>
+  <input class="form-control" type="file" accept=".pdf" id="formFileMultiple" multiple />
+  <button type="button" class="btn btn-primary" id="btnUpload">Upload</button>
+  <div class="alert alert-primary" role="alert" id="responseMessage" hidden=true>
 </div>
 </div>
+</div>
+
 </center>
 <script>
 
 const inpFile = document.getElementById("formFileMultiple");
 const btnUpload = document.getElementById("btnUpload");
+const responseMessage = document.getElementById("responseMessage");
 
 btnUpload.addEventListener("click", function () {
+
+	btnUpload.disabled = true;
+	inpFile.disabled = true;
+
 	const formData = new FormData();
 	
 	for (const file of inpFile.files) {
@@ -88,7 +96,12 @@ btnUpload.addEventListener("click", function () {
 	fetch ("http://tapas.murraystate.edu/api/upload", {
 		body: formData,
 		method: 'POST'
-		})
+		}).then(function(response) { 
+		    return response.json();
+			}).then(function(data){
+				responseMessage.innerHTML = "Your upload is complete! <br/> Your job id is <br/>" + data.status_url;
+				responseMessage.hidden = false;
+		});
 	});
 
 

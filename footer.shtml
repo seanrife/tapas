@@ -1,0 +1,5 @@
+<footer class="footer mt-auto py-3 bg-light">
+  <div class="container text-center">
+    <span class="text-muted">tapas is made possible by the generous support of the Fetzer Franklin Fund, The Center for Open Science, and Murray State University</span>
+  </div>
+</footer>

@@ -10,76 +10,36 @@
 
     <title>tapas - upload files</title>
   </head>
-  <body>
-    <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
+  <body class="d-flex flex-column min-vh-100">
+<!--#include virtual="navbar.shtml" -->
 
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="http://tapas.ai">tapas.ai</a>
-
-    <!-- Toggle button -->
-    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        <!-- Link -->
-        <li class="nav-item">
-          <li class="nav-item">
-            <a class="nav-link" href="upload.html">Upload</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Documentation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">FAQ</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-
-      </ul>
-
-      <!-- Icons -->
-      <ul class="navbar-nav d-flex flex-row me-1">
-        <li class="nav-item me-3 me-lg-0">
-          <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-        </li>
-        <li class="nav-item me-3 me-lg-0">
-          <a class="nav-link" href="#"><i class="fab fa-twitter"></i></a>
-        </li>
-      </ul>
-
-    </div>
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
 <center>
-<div class="position-relative">
-<div class="px-4 py-5 my-5 mx-10 w-50 text-center">
-  <label for="formFileMultiple" class="form-label">PUT INSTRUCTIONS HERE</label>
-  <input class="form-control" type="file" accept=".pdf" id="formFileMultiple" multiple />
-  <button type="button" class="btn btn-primary" id="btnUpload">Upload</button>
-  <div class="alert alert-primary" role="alert" id="responseMessage" hidden=true>
+<div class="px-4 py-5 my-5 text-center col-8">
+  <label for="formFileMultiple" class="form-label">Select PDF files you want to analyze and upload them.</label>
+  
+  
+<div class="input-group mb-3">
+  <input type="file" class="form-control" accept=".pdf" id="formFileMultiple" multiple>
+  <label class="input-group-text" for="formFileMultiple" id="btnUpload">Upload</label>
 </div>
+  
+  
+  
+
+<div class="alert alert-primary" role="alert" id="responseMessage" hidden=true>
 </div>
+<div class="alert alert-dark" role="alert" id="uploadingMessage" hidden=true>
 </div>
 
+</div>
 </center>
+
 <script>
 
 const inpFile = document.getElementById("formFileMultiple");
 const btnUpload = document.getElementById("btnUpload");
 const responseMessage = document.getElementById("responseMessage");
+const uploadingMessage = document.getElementById("uploadingMessage");
 
 btnUpload.addEventListener("click", function () {
 
@@ -92,14 +52,16 @@ btnUpload.addEventListener("click", function () {
 		formData.append("files[]", file);
 		}
 
-		
+		uploadingMessage.innerHTML = "Your files are uploading. Please wait.";
+		uploadingMessage.hidden = false;
 	fetch ("http://tapas.murraystate.edu/api/upload", {
 		body: formData,
 		method: 'POST'
 		}).then(function(response) { 
 		    return response.json();
 			}).then(function(data){
-				responseMessage.innerHTML = "Your upload is complete! <br/> Your job id is <br/>" + data.status_url;
+				responseMessage.innerHTML = "Your upload is complete! <br/> Your job ID is <br/>" + data.status_id + "</br> <b><i>Save this ID!</b/</i> You will need it to retreive your results after the analysis is complete.";
+				uploadingMessage.hidden = true;
 				responseMessage.hidden = false;
 		});
 	});
@@ -107,6 +69,6 @@ btnUpload.addEventListener("click", function () {
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+<!--#include virtual="footer.shtml" -->
   </body>
 </html>

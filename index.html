@@ -10,64 +10,13 @@
 
     <title>tapas</title>
   </head>
-  <body>
-    <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="http://tapas.ai">tapas.ai</a>
-
-    <!-- Toggle button -->
-    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        <!-- Link -->
-        <li class="nav-item">
-          <li class="nav-item">
-            <a class="nav-link" href="upload.html">Upload</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Documentation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">FAQ</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-
-      </ul>
-
-      <!-- Icons -->
-      <ul class="navbar-nav d-flex flex-row me-1">
-        <li class="nav-item me-3 me-lg-0">
-          <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-        </li>
-        <li class="nav-item me-3 me-lg-0">
-          <a class="nav-link" href="#"><i class="fab fa-twitter"></i></a>
-        </li>
-      </ul>
-
-    </div>
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
+  <body class="d-flex flex-column min-vh-100">
+<!--#include virtual="navbar.shtml" -->
     <div class="px-4 py-5 my-5 text-center">
       <!-- <img class="d-block mx-auto mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
       <h1 class="display-5 fw-bold">tapas</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">tapas analyzes PDFs and detects similar text among them. To get started, click "Upload Documents" below.</p>
+        <p class="lead mb-4">tapas analyzes PDFs and detects similar text among them.</p> <p>To get started, click "Upload Documents" below.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <a href="upload.html">
           <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Upload Documents</button>
@@ -77,6 +26,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+<!--#include virtual="footer.shtml" -->
   </body>
 </html>
